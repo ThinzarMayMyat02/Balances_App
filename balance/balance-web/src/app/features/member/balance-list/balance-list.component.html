@@ -1,0 +1,61 @@
+<h3><i class="bi bi-pie-chart"></i> {{ form.get('type')?.value || 'Balance' }} Management</h3>
+
+<form class="row mb-4">
+
+  <div class="col-3">
+    <label class="form-label">Category</label>
+    <select class="form-select">
+        <option value="">All Category</option>
+        <option *ngFor="let item of categories" [value]="item.id">{{item.name}}</option>
+    </select>
+  </div>
+
+  <div class="col-3">
+      <label class="form-label">Keywords</label>
+      <input type="text" placeholder="Search Keyword" class="form-control">
+  </div>
+
+  <div class="col btn-wrapper">
+      <button (click)="search()" [class.disabled]="!form.valid"  class="btn btn-outline-primary me-2">
+          <i class="bi bi-search"></i> Search
+      </button>
+
+      <a [routerLink]="['/member','list', form.get('type')?.value, 'edit']"  class="btn btn-outline-danger">
+        <i class="bi bi-plus-lg"></i> Add New
+      </a>
+  </div>
+</form>
+
+<div *ngIf="list.length == 0" class="alert alert-info">
+  There is no data.
+</div>
+
+<table *ngIf="list.length > 0" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Category</th>
+      <th>Issue At</th>
+      <th class="text-end">Total Count</th>
+      <th class="text-end">Total</th>
+      <th>Remark</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of list" class="align-middle">
+      <td>{{item.category.type}}</td>
+      <td>{{item.category.name}}</td>
+      <td>{{item.issueAt | apiDates}}</td>
+      <td class="text-end">{{item.totalCount}}</td>
+      <td class="text-end">{{item.totalAmount | number}}</td>
+      <td>{{item.remark}}</td>
+      <td>
+        <a [routerLink]="['/member', 'list', form.get('type')?.value, 'details']" [queryParams]="{id: item.id}" class="btn btn-sm btn-link">
+          <i class="bi bi-folder2-open"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

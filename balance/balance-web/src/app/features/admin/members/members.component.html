@@ -1,0 +1,53 @@
+<h3>
+    <i class="bi bi-people me-2"></i> Members Management
+</h3>
+
+<form [formGroup]="form" class="row mb-4">
+    <div class="col-3">
+        <label class="form-label">Role</label>
+        <select formControlName="role" class="form-select">
+            <option value="">All Roles</option>
+            <option value="Admin">Admin</option>
+            <option value="Member">Member</option>
+        </select>
+    </div>
+
+    <div class="col-3">
+        <label class="form-label">Member Name</label>
+        <input formControlName="keyword" type="text" placeholder="Search Member Name" class="form-control">
+    </div>
+
+    <div class="col btn-wrapper">
+        <button (click)="search()" class="btn btn-outline-primary">
+            <i class="bi bi-search"></i> Search
+        </button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td>{{item.name}}</td>
+            <td>{{item.role}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.denied ? 'Denied' : 'Allowed'}}</td>
+            <td>
+                <a [routerLink]="['/admin', 'members', 'details']" routerLinkActive="active" [queryParams]="{id: item.id}" class="btn-link">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
